@@ -1,11 +1,12 @@
 // console.log('Task Manager App')
 
 // for db conn and exec 
-require('./db/connect')
 
 const express = require('express');
 const app = express();
 const tasks = require('./routes/tasks')
+const connect_db = require('./db/connect')
+
 
 const PORT = 3000;
 
@@ -23,5 +24,14 @@ app.get('/home', (req, res) => {
 
 app.use('/api/v1/tasks', tasks);
 
+const start = async () => {
+    try {
+        await connect_db()
+        app.listen(PORT, console.log(`server is listening on ${PORT}`))
+    } catch (error) {
+        console.log(error)
+    }
+}
 
-app.listen(PORT, console.log(`server is listening on ${PORT}`))
+
+start()
