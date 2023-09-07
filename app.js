@@ -1,6 +1,7 @@
 // console.log('Task Manager App')
 
-
+// for db conn and exec 
+require('./db/connect')
 
 const express = require('express');
 const app = express();
