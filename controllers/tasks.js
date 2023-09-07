@@ -1,9 +1,19 @@
+const Task = require('../models/Task');
+
+
 const get_all_tasks = (req,res) => {
     res.send('all items from the mvc ');
 }
 
-const create_task = (req,res) => {
-    res.json(req.body)
+const create_task = async (req,res) => {
+
+    try {
+        const task = await Task.create(req.body)
+        res.status('201').json({ task })
+    } catch (error) {
+        res.status(500).json({ msg: error })
+    }
+    
 }
 
 
