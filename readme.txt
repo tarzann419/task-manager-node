@@ -1,0 +1,3 @@
+res.json({ id: req.params.id }): This line sends a JSON response to the client. It creates a JSON object with a single property, id, and assigns the value of req.params.id to it. req.params.id represents a parameter named "id" that is extracted from the URL when a client makes a request to this route.
+
+For example, if a client makes a GET request to a URL like /someRoute/123, and this code is executed as the route handler for that URL, the response sent back to the client will be JSON with the id property containing the value "123".
