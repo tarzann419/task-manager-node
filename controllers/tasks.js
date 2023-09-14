@@ -29,12 +29,15 @@ const get_single_task = async (req,res) => {
         // matching from the db with what's in the params 
         const {id: task_id} = req.params;
         const task = await Task.findOne({_id:task_id});
-        res.status(200).json({ task });
         // res.json({ id:req.params.id})
 
         if(!task){
             return res.status(404).json({ msg: `no task with id: ${task_id}`  })
         }
+
+        res.status(200).json({ task });
+
+
     } catch (error) {
         res.status(500).json({ msg: error }) 
     }
@@ -47,8 +50,13 @@ const update_task = (req,res) => {
 }
 
 
-const delete_task = (req,res) => {
-    res.send('delete task')
+const delete_task = async (req,res) => {
+    const {id:task_id} = req.params;
+    const task = await Task.findOneAndDelete({ _id:task_id});
+    if(!task){
+        return res.status(404).json({ msg: `this task doeesnt exist. id: ${task_id}` })
+    }
+    res.status(200).json({ task });
 }
 
 
