@@ -1,4 +1,4 @@
-// console.log('Task Manager App')
+ // console.log('Task Manager App')
 
 // for db conn and exec 
 
@@ -14,6 +14,7 @@ const PORT = 3000;
 
 // middleware
 
+app.use(express.static('./public'));
 app.use(express.json());
 
 

@@ -5,7 +5,12 @@ const get_all_tasks = async (req,res) => {
     try {
         // const get_task = await Task.findOne('64f9fcc7247f16b6e5f5e90a');
         const get_task = await Task.find({});
-        res.status(201).json({ get_task })
+        res.status(200).json({ get_task })
+        res.status(200).json({ get_task, amount:get_task.length })
+        res.status(200).json({
+            status: 'success',
+            data: {get_task, nbHits: get_task.length}
+        })
     } catch (error) {
         res.status(500).json({ msg: error })
     }
@@ -45,11 +50,6 @@ const get_single_task = async (req,res) => {
 }
 
 
-const update_task = (req,res) => {
-    res.send('update_task')
-}
-
-
 const delete_task = async (req,res) => {
     const {id:task_id} = req.params;
     const task = await Task.findOneAndDelete({ _id:task_id});
@@ -59,6 +59,44 @@ const delete_task = async (req,res) => {
     res.status(200).json({ task });
 }
 
+// update usding patch
+const update_task = async (req,res) => {
+    // res.send('update_task') 
+    try {
+        const {id:task_id} = req.params;
+        const task = await Task.findOneAndUpdate({ _id:task_id }, req.body, {
+            new:true,
+            runValidators:true
+        });
+        if(!task){
+            return res.status(404).json({ msg: `this task doesnt exit. id: ${task_id}` });
+        }
+
+        res.status(200).json({ task })
+    } catch (error) {
+        res.status(404).json({ msg: error });
+    }
+}
+
+// update using put method
+// const edit_task = async (req,res) => {
+//     // res.send('update_task') 
+//     try {
+//         const {id:task_id} = req.params;
+//         const task = await Task.findOneAndUpdate({ _id:task_id }, req.body, {
+//             new:true,
+//             runValidators:true
+//         });
+//         if(!task){
+//             return res.status(404).json({ msg: `this task doesnt exit. id: ${task_id}` });
+//         }
+
+//         res.status(200).json({ task })
+//     } catch (error) {
+//         res.status(404).json({ msg: error });
+//     }
+// }
+
 
 module.exports = {
     get_all_tasks,
@@ -66,4 +104,5 @@ module.exports = {
     get_single_task,
     update_task,
     delete_task,
+    // edit_task
 }

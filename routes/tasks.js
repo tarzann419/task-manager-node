@@ -15,4 +15,5 @@ Router.route('/').get(get_all_tasks).post(create_task);
 
 // for all the routes that have to do with 'id'
 Router.route('/:id').get(get_single_task).patch(update_task).delete(delete_task);
+// .put(edit_task )
 module.exports = Router;
