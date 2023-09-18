@@ -8,6 +8,7 @@ const tasks = require('./routes/tasks')
 const connect_db = require('./db/connect')
 require('dotenv').config() 
 
+const notFound = require('./middleware/not-found');
 
 const PORT = 3000;
 
@@ -25,6 +26,7 @@ app.get('/home', (req, res) => {
 });
 
 app.use('/api/v1/tasks', tasks);
+app.use(notFound)
 
 const start = async () => {
     try {
