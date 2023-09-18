@@ -1,21 +1,25 @@
 const Task = require('../models/Task');
+const asyncWrapper = require('../middleware/asyncWrapper');
 
 
-const get_all_tasks = async (req,res) => {
-    try {
-        // const get_task = await Task.findOne('64f9fcc7247f16b6e5f5e90a');
-        const get_task = await Task.find({});
-        res.status(200).json({ get_task })
-        res.status(200).json({ get_task, amount:get_task.length })
-        res.status(200).json({
-            status: 'success',
-            data: {get_task, nbHits: get_task.length}
-        })
-    } catch (error) {
-        res.status(500).json({ msg: error })
-    }
+const get_all_tasks = asyncWrapper( async (req,res) => {
+    
+        // const tasks = await Task.findOne('64f9fcc7247f16b6e5f5e90a');
+        
+        const tasks = await Task.find({});
+        res.status(200).json({ tasks })
+        // res.status(200).json({ tasks, amount:tasks.length })
+        // res.status(200).json({
+        //     status: 'success',
+        //     data: {tasks, nbHits: tasks.length}
+        // })
+    
+    
+        //  catch (error) {
+    //     res.status(500).json({ msg: error })
+    // }
     // res.send('all items from the mvc ');
-}
+})
 
 const create_task = async (req,res) => {
 
